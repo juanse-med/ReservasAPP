@@ -1,0 +1,28 @@
+<!-- reservas/templates/reservas/reservar_habitacion.html -->
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+
+{% block title %}Habitaciones{% endblock %}
+    
+{% block content %}
+    <h1>Hotel ADA</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Habitación</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datepicker/datepicker.min.css">
+    
+
+</head>
+<body>
+    <h1>Reservar Habitación</h1>
+    <form method="post" action="{% url 'reservar_habitacion' habitacion.id %}">    
+        {% csrf_token %}
+        {{ form.as_p }}
+        <h6>Formato Fecha: YYYY-MM-DD</h6>
+        <button type="submit">Reservar</button>
+    </form>
+</body>
+</html>
+{% endblock %}

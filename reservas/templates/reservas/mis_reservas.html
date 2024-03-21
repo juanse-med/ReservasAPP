@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends 'base.html' %}
+
+{% block title %}Mis Reservas{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reservas</title>
+    <style>
+        /* Estilo para los elementos de lista */
+        ul {
+            list-style: none; 
+            padding: 0; 
+        }
+
+        /* Estilo para cada elemento de reserva */
+        .reserva {
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            transition: background-color 0.3s; 
+        }
+
+        /* Estilo para cambiar el color de fondo al pasar el ratón sobre cada reserva */
+        .reserva:hover {
+            background-color: #9ee5f5; 
+        }
+
+        /* Estilo para el botón de cancelar reserva */
+        .boton-cancelar {
+            background-color: #dc3545;
+            color: #fff; 
+            padding: 5px 10px; 
+            border: none; 
+            border-radius: 3px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+
+       
+        .boton-cancelar:hover {
+            background-color: #c82333; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Hotel ADA</h1>
+    <h2>Mis Reservas</h2>
+    <ul>
+        {% for reserva in reservas %}
+            <li class="reserva">
+                <p><strong>Habitación:</strong> {{ reserva.habitacion.numero }}</p>
+                <p><strong>Fecha de inicio:</strong> {{ reserva.fecha_inicio }}</p>
+                <p><strong>Fecha de fin:</strong> {{ reserva.fecha_fin }}</p>
+                <form id="form-cancelar-{{ reserva.id }}" action="{% url 'cancelar_reserva' reserva.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="button" class="boton-cancelar" onclick="confirmarCancelar('{{ reserva.id }}')">Cancelar Reserva</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function confirmarCancelar(reservaId) {
+            if (confirm("¿Estás seguro de que deseas cancelar esta reserva?")) {
+                document.getElementById('form-cancelar-' + reservaId).submit();
+            }
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

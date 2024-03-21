@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+        
+{% block content %}
+<h1>Hotel ADA</h1>
+
+{% if user.is_authenticated %}
+    <!-- Mostrar información para usuarios autenticados -->
+    <p>Bienvenido, {{ user.username }}.</p>
+{% else %}
+    <!-- Mostrar información para usuarios no autenticados -->
+    <p>No has iniciado sesión. <a href="{% url 'login' %}">Iniciar sesión</a></p>
+{% endif %}
+
+</body>
+</html>
+{% endblock %}
+

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hotel ADA{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            display: flex;
+            flex-direction: row;
+        }
+        #menu {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            flex: 1;
+            height: 200vh; /* Ajusta la altura del menú para ocupar toda la altura de la ventana */
+
+        }
+        #content {
+            flex: 4;
+            padding: 50px;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            margin-bottom: 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 15px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        #header {
+            background-color: #012c53; 
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+       
+    </div>
+    <div id="container">
+        <nav id="menu">
+            <ul>
+                <li><a href="{% url 'index' %}">Inicio</a></li>
+                <li><a href="{% url 'habitaciones' %}">Habitaciones</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'mis_reservas' %}">Mis Reservas</a></li>
+                    <li>
+                        <form action="{% url 'cerrar_sesion' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Cerrar Sesión</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'signup' %}">Registrarse</a></li>
+                    <li><a href="{% url 'login' %}">Iniciar Sesión</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

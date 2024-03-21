@@ -1,0 +1,63 @@
+<!-- reservas/templates/reservas/habitaciones.html -->
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+
+{% block title %}Habitaciones{% endblock %}
+    
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habitaciones</title>
+    <style>
+        /* Estilo para los divs que contienen cada habitación */
+        .habitacion {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+
+        /* Estilo para cambiar el color de fondo al pasar el ratón sobre cada habitación */
+        .habitacion:hover {
+            background-color: #9ee5f5; 
+        }
+
+        /* Estilo para el botón de reserva */
+        .boton-reserva {
+            background-color: #007bff; 
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Estilo para cambiar el color de fondo al pasar el ratón sobre el botón de reserva */
+        .boton-reserva:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hotel ADA</h1>
+    <h2>Habitaciones Disponibles</h2>
+    {% for habitacion in habitaciones %}
+        <div class="habitacion">
+            <h3>Habitación {{ habitacion.numero }}</h3>
+            <p><strong>Tipo de Habitación:</strong> {{ habitacion.tipo }}</p>
+            <p><strong>Precio:</strong> ${{ habitacion.precio_por_noche }}</p>
+            <p><strong>Descripción:</strong> {{ habitacion.descripcion }}</p>
+            {% if habitacion.disponible %}
+                <p><strong>Estado:</strong> Disponible</p>
+                <a href="{% url 'reservar_habitacion' habitacion.id %}" class="boton-reserva">Reservar</a>
+            {% else %}
+                <p><strong>Estado:</strong> No disponible</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>
+{% endblock %}
